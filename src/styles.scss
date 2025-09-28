@@ -24,6 +24,9 @@ input {
 // reset ng-virtual-list-item styles
 .list::part(item) {
     background-color: unset;
+    cursor: pointer;
+    user-select: none;
+    word-break: break-all;
 }
 
 .wrapper {
@@ -181,6 +184,7 @@ input {
     &::part(item-focused) {
         outline: none;
         border: 1px solid #33006d;
+        box-sizing: border-box;
     }
 
     &::part(scroller) {
