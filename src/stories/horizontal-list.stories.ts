@@ -29,6 +29,44 @@ const meta: Meta<HorizontalVirtualListComponent> = {
     screenReaderMessage: {
       control: { type: 'text' },
     },
+    snap: {
+      control: { type: 'boolean' },
+    },
+    snappingMethod: {
+      options: ['normal', 'advanced', 'chat'],
+      control: { type: 'radio' },
+    },
+    langTextDir: {
+      options: ['ltr', 'rtl'],
+      control: { type: 'radio' },
+    },
+    loading: {
+      control: { type: 'boolean' },
+    },
+    scrollbarTheme: {
+      control: { type: 'object' },
+    },
+    clickDistance: {
+      control: { type: 'range', min: 1, max: 1000, step: 1 },
+    },
+    waitForPreparation: {
+      control: { type: 'boolean' },
+    },
+    scrollStartOffset: {
+      control: { type: 'range', min: 1, max: 1000, step: 1 },
+    },
+    scrollEndOffset: {
+      control: { type: 'range', min: 1, max: 1000, step: 1 },
+    },
+    snapScrollToBottom: {
+      control: { type: 'boolean' },
+    },
+    snapToEndTransitionInstantOffset: {
+      control: { type: 'range', min: 0, max: 10000, step: 1 },
+    },
+    scrollbarMinSize: {
+      control: { type: 'range', min: 1, max: 1000, step: 1 },
+    },
   },
 };
 
