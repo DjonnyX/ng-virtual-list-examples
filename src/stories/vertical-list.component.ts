@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Id, IVirtualListItemConfigMap, MethodForSelecting, MethodsForSelecting, NgVirtualListComponent, ScrollBarTheme, SnappingMethod, SnappingMethods, TextDirection, TextDirections } from "ng-virtual-list";
+import { IAnimationParams, Id, IVirtualListItemConfigMap, MethodForSelecting, MethodsForSelecting, NgVirtualListComponent, ScrollBarTheme, SnappingMethod, SnappingMethods, TextDirection, TextDirections } from "ng-virtual-list";
 import { GROUP_ITEMS, GROUP_ITEMS_ITEM_CONFIG_MAP } from '../app/utils';
 
 @Component({
@@ -30,7 +30,7 @@ import { GROUP_ITEMS, GROUP_ITEMS_ITEM_CONFIG_MAP } from '../app/utils';
                     <button class="scroll-to__button" (click)="onButtonScrollToIdClickHandler($event)">Scroll</button>
                 </div>
                 <ng-virtual-list #virtualList class="list" [items]="items" [itemConfigMap]="itemConfigMap()" [itemRenderer]="itemRenderer" direction="vertical" [screenReaderMessage]="screenReaderMessage()" [bufferSize]="bufferSize()" [maxBufferSize]="maxBufferSize()"[enabledBufferOptimization]="enabledBufferOptimization()" [dynamicSize]="dynamicSize()" [itemSize]="itemSize()" [methodForSelecting]="methodForSelecting()"  [snap]="snap()" [selectByClick]="selectByClick()" [collapseByClick]="collapseByClick()"
-                [snappingMethod]="snappingMethod()" [langTextDir]="langTextDir()" [loading]="loading()" [scrollbarTheme]="scrollbarTheme()" [clickDistance]="clickDistance()" [waitForPreparation]="waitForPreparation()" [scrollStartOffset]="scrollStartOffset()" [scrollEndOffset]="scrollEndOffset()" [snapScrollToBottom]="snapScrollToBottom()" [snapToEndTransitionInstantOffset]="snapToEndTransitionInstantOffset()" [scrollbarMinSize]="scrollbarMinSize()" [selectedIds]="selectedIds()" [collapsedIds]="collapsedIds()" (onScrollReachStart)="onScrollReachStartHandler()" (onScrollReachEnd)="onScrollReachEndHandler()"></ng-virtual-list>
+                [snappingMethod]="snappingMethod()" [langTextDir]="langTextDir()" [loading]="loading()" [scrollbarTheme]="scrollbarTheme()" [clickDistance]="clickDistance()" [waitForPreparation]="waitForPreparation()" [scrollStartOffset]="scrollStartOffset()" [scrollEndOffset]="scrollEndOffset()" [snapScrollToBottom]="snapScrollToBottom()" [snapToEndTransitionInstantOffset]="snapToEndTransitionInstantOffset()" [scrollbarMinSize]="scrollbarMinSize()" [selectedIds]="selectedIds()" [collapsedIds]="collapsedIds()" [scrollbarEnabled]="scrollbarEnabled()" [scrollbarInteractive]="scrollbarInteractive()" [overscrollEnabled]="overscrollEnabled()" [animationParams]="animationParams()" [scrollBehavior]="scrollBehavior()" (onScrollReachStart)="onScrollReachStartHandler()" (onScrollReachEnd)="onScrollReachEndHandler()"></ng-virtual-list>
                 <ng-template #itemRenderer let-data="data" let-config="config">
                     @if (data) {
                     @switch (data.type) {
@@ -90,11 +90,14 @@ export class VerticalVirtualListComponent {
 
     scrollbarTheme = input<ScrollBarTheme>({
         fill: ["rgba(51, 0, 97, 1)", "rgba(73, 0, 97, 1)"],
+        hoverFill: ["rgba(73, 6, 133, 1)", "rgba(73, 6, 133, 1)"],
+        pressedFill: ["rgba(73, 6, 150, 1)", "rgba(95, 0, 150, 1)"],
         strokeGradientColor: ["rgba(133, 142, 255, 0)", "rgb(0, 133, 160)"],
         strokeAnimationDuration: 1000,
         thickness: 6,
         roundCorner: [3, 3, 3, 3],
         rippleColor: 'rgba(255,255,255,0.5)',
+        rippleEnabled: true,
     });
 
     clickDistance = input<number>(40);
@@ -110,6 +113,16 @@ export class VerticalVirtualListComponent {
     snapToEndTransitionInstantOffset = input<number>(0);
 
     scrollbarMinSize = input<number>(80);
+
+    scrollbarEnabled = input<boolean>(true);
+
+    scrollbarInteractive = input<boolean>(true);
+
+    overscrollEnabled = input<boolean>(true);
+
+    animationParams = input<IAnimationParams>({scrollToItem: 50, navigateToItem: 150});
+
+    scrollBehavior = input<ScrollBehavior>('auto');
 
     protected _listContainerRef = viewChild('virtualList', { read: NgVirtualListComponent });
 

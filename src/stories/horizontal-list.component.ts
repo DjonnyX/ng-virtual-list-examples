@@ -1,7 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { Id, MethodForSelecting, MethodsForSelecting, NgVirtualListComponent, ScrollBarTheme, SnappingMethod, SnappingMethods, TextDirection, TextDirections } from "ng-virtual-list";
+import { IAnimationParams, Id, MethodForSelecting, MethodsForSelecting, NgVirtualListComponent, ScrollBarTheme, SnappingMethod, SnappingMethods, TextDirection, TextDirections } from "ng-virtual-list";
 import { HORIZONTAL_ITEMS } from '../app/utils';
 
 @Component({
@@ -30,7 +30,7 @@ import { HORIZONTAL_ITEMS } from '../app/utils';
                     <button class="scroll-to__button" (click)="onButtonScrollToIdClickHandler($event)">Scroll</button>
                 </div>
                 <ng-virtual-list #virtualList class="list" [items]="items" [itemRenderer]="itemRenderer" direction="horizontal" [screenReaderMessage]="screenReaderMessage()" [bufferSize]="bufferSize()" [maxBufferSize]="maxBufferSize()"[enabledBufferOptimization]="enabledBufferOptimization()" [dynamicSize]="dynamicSize()" [itemSize]="itemSize()" [methodForSelecting]="methodForSelecting()" 
-                [snap]="snap()" [snappingMethod]="snappingMethod()" [langTextDir]="langTextDir()" [loading]="loading()" [scrollbarTheme]="scrollbarTheme()" [clickDistance]="clickDistance()" [waitForPreparation]="waitForPreparation()" [scrollStartOffset]="scrollStartOffset()" [scrollEndOffset]="scrollEndOffset()" [snapScrollToBottom]="snapScrollToBottom()" [snapToEndTransitionInstantOffset]="snapToEndTransitionInstantOffset()" [scrollbarMinSize]="scrollbarMinSize()" [selectByClick]="selectByClick()" [selectedIds]="selectedIds()" (onScrollReachStart)="onScrollReachStartHandler()" (onScrollReachEnd)="onScrollReachEndHandler()"></ng-virtual-list>
+                [snap]="snap()" [snappingMethod]="snappingMethod()" [langTextDir]="langTextDir()" [loading]="loading()" [scrollbarTheme]="scrollbarTheme()" [clickDistance]="clickDistance()" [waitForPreparation]="waitForPreparation()" [scrollStartOffset]="scrollStartOffset()" [scrollEndOffset]="scrollEndOffset()" [snapScrollToBottom]="snapScrollToBottom()" [snapToEndTransitionInstantOffset]="snapToEndTransitionInstantOffset()" [scrollbarMinSize]="scrollbarMinSize()" [selectByClick]="selectByClick()" [selectedIds]="selectedIds()" [scrollbarEnabled]="scrollbarEnabled()" [scrollbarInteractive]="scrollbarInteractive()" [overscrollEnabled]="overscrollEnabled()" [animationParams]="animationParams()" [scrollBehavior]="scrollBehavior()" (onScrollReachStart)="onScrollReachStartHandler()" (onScrollReachEnd)="onScrollReachEndHandler()"></ng-virtual-list>
                 <ng-template #itemRenderer let-data="data" let-config="config">
                     @if (data) {
                     <div [ngClass]="{'list__h-container': true, 'even': config.even, 'selected': config.selected}">
@@ -75,11 +75,14 @@ export class HorizontalVirtualListComponent {
 
     scrollbarTheme = input<ScrollBarTheme>({
         fill: ["rgba(51, 0, 97, 1)", "rgba(73, 0, 97, 1)"],
+        hoverFill: ["rgba(73, 6, 133, 1)", "rgba(73, 6, 133, 1)"],
+        pressedFill: ["rgba(73, 6, 150, 1)", "rgba(95, 0, 150, 1)"],
         strokeGradientColor: ["rgba(133, 142, 255, 0)", "rgb(0, 133, 160)"],
         strokeAnimationDuration: 1000,
         thickness: 6,
         roundCorner: [3, 3, 3, 3],
         rippleColor: 'rgba(255,255,255,0.5)',
+        rippleEnabled: true,
     });
 
     clickDistance = input<number>(40);
@@ -95,6 +98,16 @@ export class HorizontalVirtualListComponent {
     snapToEndTransitionInstantOffset = input<number>(0);
 
     scrollbarMinSize = input<number>(80);
+    
+    scrollbarEnabled = input<boolean>(true);
+
+    scrollbarInteractive = input<boolean>(true);
+
+    overscrollEnabled = input<boolean>(true);
+
+    animationParams = input<IAnimationParams>({scrollToItem: 50, navigateToItem: 150});
+
+    scrollBehavior = input<ScrollBehavior>('auto');
 
     protected _listContainerRef = viewChild('virtualList', { read: NgVirtualListComponent });
 

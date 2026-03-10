@@ -66,6 +66,22 @@ const meta: Meta<VerticalVirtualListComponent> = {
     scrollbarMinSize: {
       control: { type: 'range', min: 1, max: 1000, step: 1 },
     },
+    scrollbarEnabled: {
+      control: { type: 'boolean' },
+    },
+    scrollbarInteractive: {
+      control: { type: 'boolean' },
+    },
+    overscrollEnabled: {
+      control: { type: 'boolean' },
+    },
+    animationParams: {
+      control: { type: 'object' },
+    },
+    scrollBehavior: {
+      options: ['auto', 'smooth', 'instant'],
+      control: { type: 'radio' },
+    },
   },
 };
 
