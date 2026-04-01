@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IAnimationParams, Id, MethodForSelecting, MethodsForSelecting, NgVirtualListComponent, ScrollBarTheme, SnappingMethod, SnappingMethods, TextDirection, TextDirections } from "ng-virtual-list";
+import { IAnimationParams, Id, MethodForSelecting, MethodsForSelecting, NgVirtualListComponent, NgVirtualListModule, ScrollBarTheme, SnappingMethod, SnappingMethods, TextDirection, TextDirections } from "ng-virtual-list";
 import { HORIZONTAL_ITEMS } from '../app/utils';
 
 @Component({
     selector: 'horizontal-virtual-list',
     standalone: true,
-    imports: [CommonModule, FormsModule, NgVirtualListComponent],
+    imports: [CommonModule, FormsModule, NgVirtualListModule],
     template: `
     <div class="wrapper">
         <div class="vl-section block cap">
@@ -30,7 +30,7 @@ import { HORIZONTAL_ITEMS } from '../app/utils';
                     <button class="scroll-to__button" (click)="onButtonScrollToIdClickHandler($event)">Scroll</button>
                 </div>
                 <ng-virtual-list #virtualList class="list" [items]="items" [itemRenderer]="itemRenderer" direction="horizontal" [screenReaderMessage]="screenReaderMessage()" [bufferSize]="bufferSize()" [maxBufferSize]="maxBufferSize()"[enabledBufferOptimization]="enabledBufferOptimization()" [dynamicSize]="dynamicSize()" [itemSize]="itemSize()" [methodForSelecting]="methodForSelecting()" 
-                [snap]="snap()" [snappingMethod]="snappingMethod()" [langTextDir]="langTextDir()" [loading]="loading()" [scrollbarTheme]="scrollbarTheme()" [clickDistance]="clickDistance()" [waitForPreparation]="waitForPreparation()" [scrollStartOffset]="scrollStartOffset()" [scrollEndOffset]="scrollEndOffset()" [snapScrollToBottom]="snapScrollToBottom()" [snapToEndTransitionInstantOffset]="snapToEndTransitionInstantOffset()" [scrollbarMinSize]="scrollbarMinSize()" [selectByClick]="selectByClick()" [selectedIds]="selectedIds()" [scrollbarEnabled]="scrollbarEnabled()" [scrollbarInteractive]="scrollbarInteractive()" [overscrollEnabled]="overscrollEnabled()" [animationParams]="animationParams()" [scrollBehavior]="scrollBehavior()" (onScrollReachStart)="onScrollReachStartHandler()" (onScrollReachEnd)="onScrollReachEndHandler()"></ng-virtual-list>
+                [snap]="snap()" [snappingMethod]="snappingMethod()" [langTextDir]="langTextDir()" [loading]="loading()" [scrollbarTheme]="scrollbarTheme()" [clickDistance]="clickDistance()" [waitForPreparation]="waitForPreparation()" [scrollStartOffset]="scrollStartOffset()" [scrollEndOffset]="scrollEndOffset()" [snapScrollToStart]="snapScrollToStart()" [snapScrollToEnd]="snapScrollToEnd()" [snapToEndTransitionInstantOffset]="snapToEndTransitionInstantOffset()" [scrollbarMinSize]="scrollbarMinSize()" [selectByClick]="selectByClick()" [selectedIds]="selectedIds()" [scrollbarEnabled]="scrollbarEnabled()" [scrollbarInteractive]="scrollbarInteractive()" [overscrollEnabled]="overscrollEnabled()" [animationParams]="animationParams()" [scrollBehavior]="scrollBehavior()" (onScrollReachStart)="onScrollReachStartHandler()" (onScrollReachEnd)="onScrollReachEndHandler()"></ng-virtual-list>
                 <ng-template #itemRenderer let-data="data" let-config="config">
                     @if (data) {
                     <div [ngClass]="{'list__h-container': true, 'even': config.even, 'selected': config.selected}">
@@ -59,7 +59,7 @@ export class HorizontalVirtualListComponent {
 
     selectByClick = input<boolean>(true);
 
-    selectedIds = input<Array<Id> | Id | undefined>();
+    selectedIds = input<Array<Id> | Id | null>(null);
 
     enabledBufferOptimization = input<boolean>(false);
 
@@ -67,7 +67,7 @@ export class HorizontalVirtualListComponent {
 
     screenReaderMessage = input<string>("Showing items $1 to $2");
 
-    snappingMethod = input<SnappingMethod>(SnappingMethods.NORMAL);
+    snappingMethod = input<SnappingMethod>(SnappingMethods.STANDART);
 
     langTextDir = input<TextDirection>(TextDirections.LTR);
 
@@ -93,7 +93,9 @@ export class HorizontalVirtualListComponent {
 
     scrollEndOffset = input<number>(0);
 
-    snapScrollToBottom = input<boolean>(false);
+    snapScrollToStart = input<boolean>(true);
+
+    snapScrollToEnd = input<boolean>(true);
 
     snapToEndTransitionInstantOffset = input<number>(0);
 
@@ -105,7 +107,7 @@ export class HorizontalVirtualListComponent {
 
     overscrollEnabled = input<boolean>(true);
 
-    animationParams = input<IAnimationParams>({scrollToItem: 50, navigateToItem: 150});
+    animationParams = input<IAnimationParams>({scrollToItem: 50, navigateToItem: 150, navigateByKeyboard: 25});
 
     scrollBehavior = input<ScrollBehavior>('auto');
 

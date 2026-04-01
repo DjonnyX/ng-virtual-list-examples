@@ -32,7 +32,7 @@ const meta: Meta<VerticalVirtualListComponent> = {
       control: { type: 'boolean' },
     },
     snappingMethod: {
-      options: ['normal', 'advanced', 'chat'],
+      options: ['standart', 'advanced'],
       control: { type: 'radio' },
     },
     langTextDir: {
@@ -57,7 +57,10 @@ const meta: Meta<VerticalVirtualListComponent> = {
     scrollEndOffset: {
       control: { type: 'range', min: 1, max: 1000, step: 1 },
     },
-    snapScrollToBottom: {
+    snapScrollToStart: {
+      control: { type: 'boolean' },
+    },
+    snapScrollToEnd: {
       control: { type: 'boolean' },
     },
     snapToEndTransitionInstantOffset: {

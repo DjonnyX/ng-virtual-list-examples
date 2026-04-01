@@ -58,7 +58,10 @@ const meta: Meta<HorizontalVirtualListComponent> = {
     scrollEndOffset: {
       control: { type: 'range', min: 1, max: 1000, step: 1 },
     },
-    snapScrollToBottom: {
+    snapScrollToStart: {
+      control: { type: 'boolean' },
+    },
+    snapScrollToEnd: {
       control: { type: 'boolean' },
     },
     snapToEndTransitionInstantOffset: {

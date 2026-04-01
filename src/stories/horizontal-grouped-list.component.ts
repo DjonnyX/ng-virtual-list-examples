@@ -1,13 +1,13 @@
 import { CommonModule } from '@angular/common';
 import { Component, input, viewChild } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { IAnimationParams, Id, IVirtualListItemConfigMap, MethodForSelecting, MethodsForSelecting, NgVirtualListComponent, ScrollBarTheme, SnappingMethod, SnappingMethods, TextDirection, TextDirections } from "ng-virtual-list";
+import { IAnimationParams, Id, IVirtualListItemConfigMap, MethodForSelecting, MethodsForSelecting, NgVirtualListComponent, NgVirtualListModule, ScrollBarTheme, SnappingMethod, SnappingMethods, TextDirection, TextDirections } from "ng-virtual-list";
 import { HORIZONTAL_GROUP_ITEMS_ITEM_CONFIG_MAP, HORIZONTAL_GROUP_ITEMS } from '../app/utils';
 
 @Component({
     selector: 'horizontal-grouped-virtual-list',
     standalone: true,
-    imports: [CommonModule, FormsModule, NgVirtualListComponent],
+    imports: [CommonModule, FormsModule, NgVirtualListModule],
     template: `
     <div class="wrapper">
         <div class="vl-section block cap">
@@ -33,7 +33,7 @@ import { HORIZONTAL_GROUP_ITEMS_ITEM_CONFIG_MAP, HORIZONTAL_GROUP_ITEMS } from '
                 [maxBufferSize]="maxBufferSize()" [dynamicSize]="dynamicSize()" [itemSize]="itemSize()" [methodForSelecting]="methodForSelecting()" [itemConfigMap]="itemConfigMap()" [snap]="snap()" [selectByClick]="selectByClick()" [collapseByClick]="collapseByClick()"
                 [[snappingMethod]="snappingMethod()" [langTextDir]="langTextDir()" [loading]="loading()" [scrollbarTheme]="scrollbarTheme()"
                 [clickDistance]="clickDistance()" [waitForPreparation]="waitForPreparation()" [scrollStartOffset]="scrollStartOffset()"
-                [scrollEndOffset]="scrollEndOffset()" [snapScrollToBottom]="snapScrollToBottom()" [snapToEndTransitionInstantOffset]="snapToEndTransitionInstantOffset()" [scrollbarMinSize]="scrollbarMinSize()" [scrollbarEnabled]="scrollbarEnabled()" [scrollbarInteractive]="scrollbarInteractive()" [overscrollEnabled]="overscrollEnabled()" [animationParams]="animationParams()" [scrollBehavior]="scrollBehavior()" [selectedIds]="selectedIds()" [collapsedIds]="collapsedIds()" (onScrollReachStart)="onScrollReachStartHandler()" (onScrollReachEnd)="onScrollReachEndHandler()"></ng-virtual-list>
+                [scrollEndOffset]="scrollEndOffset()" [snapScrollToStart]="snapScrollToStart()" [snapScrollToEnd]="snapScrollToEnd()" [snapToEndTransitionInstantOffset]="snapToEndTransitionInstantOffset()" [scrollbarMinSize]="scrollbarMinSize()" [scrollbarEnabled]="scrollbarEnabled()" [scrollbarInteractive]="scrollbarInteractive()" [overscrollEnabled]="overscrollEnabled()" [animationParams]="animationParams()" [scrollBehavior]="scrollBehavior()" [selectedIds]="selectedIds()" [collapsedIds]="collapsedIds()" (onScrollReachStart)="onScrollReachStartHandler()" (onScrollReachEnd)="onScrollReachEndHandler()"></ng-virtual-list>
                 <ng-template #itemRenderer let-data="data" let-config="config">
                     @if (data) {
                     @switch (data.type) {
@@ -75,7 +75,7 @@ export class HorizontalGroupedVirtualListComponent {
 
     selectByClick = input<boolean>(true);
 
-    selectedIds = input<Array<Id> | Id | undefined>();
+    selectedIds = input<Array<Id> | Id | null>(null);
 
     collapsedIds = input<Array<Id>>([]);
 
@@ -85,7 +85,7 @@ export class HorizontalGroupedVirtualListComponent {
 
     screenReaderMessage = input<string>("Showing items $1 to $2");
 
-    snappingMethod = input<SnappingMethod>(SnappingMethods.NORMAL);
+    snappingMethod = input<SnappingMethod>(SnappingMethods.STANDART);
 
     langTextDir = input<TextDirection>(TextDirections.LTR);
 
@@ -111,7 +111,9 @@ export class HorizontalGroupedVirtualListComponent {
 
     scrollEndOffset = input<number>(0);
 
-    snapScrollToBottom = input<boolean>(false);
+    snapScrollToStart = input<boolean>(true);
+
+    snapScrollToEnd = input<boolean>(true);
 
     snapToEndTransitionInstantOffset = input<number>(0);
 
@@ -123,7 +125,7 @@ export class HorizontalGroupedVirtualListComponent {
 
     overscrollEnabled = input<boolean>(true);
 
-    animationParams = input<IAnimationParams>({ scrollToItem: 50, navigateToItem: 150 });
+    animationParams = input<IAnimationParams>({ scrollToItem: 50, navigateToItem: 150, navigateByKeyboard: 25 });
 
     scrollBehavior = input<ScrollBehavior>('auto');
 
